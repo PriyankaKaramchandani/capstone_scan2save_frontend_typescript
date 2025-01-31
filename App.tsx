@@ -6,8 +6,10 @@ import Login from './app/login';
 import SignUp from './app/signUp';
 import { RootStackParamList } from './types';
 import userProfile from './app/userProfile';
-import medicalProfile from './app/medicalProfile';
-import additionalmedicalProfile from './app/additionalMedicalProfile';
+import MedicalProfile from './app/MedicalProfile';
+import additionalMedicalProfile from './app/additionalMedicalProfile';
+import generateQrCode from './app/generateQrCode';
+import UserProfileScreen from './app/UserProfileScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -19,8 +21,10 @@ const App = () => {
         <Stack.Screen name="login" component={Login} options={{ title: 'Login' }} />
         <Stack.Screen name="signUp" component={SignUp} options={{ title: 'Sign Up' }} />
         <Stack.Screen name="userProfile" component={userProfile} options={{ title: 'userProfile' }} />
-        <Stack.Screen name="medicalProfile" component={medicalProfile} options={{ title: 'medicalProfile' }} />
-        <Stack.Screen name="additionalmedicalProfile" component={additionalmedicalProfile} options={{ title: 'additionalmedicalProfile' }} />
+        <Stack.Screen name="medicalProfile" component={MedicalProfile} options={{ title: 'medicalProfile' }} />
+        <Stack.Screen name="additionalMedicalProfile" component={additionalMedicalProfile} options={{ title: 'additionalMedicalProfile' }} />
+        <Stack.Screen name="generateQrCode" component={generateQrCode} options={{ title: 'generateQrCode' }} />
+        <Stack.Screen name="userProfileScreen" component={UserProfileScreen} options={{ title: 'userProfileScreen' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -28,5 +32,5 @@ const App = () => {
 
 export default App;
 
-additionalmedicalProfile
+
 

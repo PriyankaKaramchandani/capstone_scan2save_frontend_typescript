@@ -4,6 +4,8 @@ export type RootStackParamList = {
     signUp: undefined;
     userProfile: undefined;
     medicalProfile: undefined;
-    additionalmedicalProfile: undefined;
+    additionalMedicalProfile: undefined;
+    generateQrCode: undefined;
+    userProfileScreen: undefined;
   };
 
