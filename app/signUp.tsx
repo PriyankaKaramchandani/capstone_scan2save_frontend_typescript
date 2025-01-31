@@ -1,24 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types';
 
-// Define RouteStackParamList type
-type RouteStackParamList = {
-  Home: undefined;
-  Login: undefined;
-  SignUp: undefined;
-  CreateProfile: undefined;
-};
-
-// Define the type for the navigation prop
-type SignUpScreenNavigationProp = NativeStackNavigationProp<RouteStackParamList, 'SignUp'>;
+type SignUpScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'signUp'>;
 
 // Define the props for the SignUp component
 interface SignUpProps {
   navigation: SignUpScreenNavigationProp;
 }
 
-const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
+const SignUp: React.FC<SignUpProps> = () => {
+  const navigation = useNavigation<SignUpScreenNavigationProp>();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -30,10 +24,11 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
     }
     // Call authentication API or validation here
     // If successful, navigate to another screen
-    navigation.navigate('CreateProfile'); // Ensure 'CreateProfile' exists in RouteStackParamList
+    // navigation.navigate('CreateProfile'); // Ensure 'CreateProfile' exists in RouteStackParamList
   };
 
   return (
+    <>
     <View style={styles.container}>
       <Text style={styles.text}>Sign Up Page</Text>
       <TextInput
@@ -50,43 +45,101 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        autoCapitalize="none"
       />
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('userProfile')}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-    </View>
+      <TouchableOpacity style={[styles.button, styles.backButton]} onPress={() => navigation.navigate('home')}>
+        <Text style={styles.buttonText}>Back to Home</Text>
+      </TouchableOpacity>
+      </View>
+      <View style={styles.footerContainer}>
+        <Image source={require('../assets/images/footer.png')} style={styles.footer} resizeMode="contain" />
+      </View>
+    </>
   );
 };
 
 export default SignUp;
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#EF476F',
     padding: 20,
   },
-  text: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  input: {
+  footerContainer: {
     width: '100%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
+    alignItems: 'center',
+    backgroundColor: '#EF476F',
+    marginTop: 'auto',
+  },
+  footer: {
+    width: '100%',
+    height: 88,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
     marginBottom: 20,
-    paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#FFF8EF',
     padding: 10,
     borderRadius: 5,
+    marginHorizontal: 5,
+    borderWidth: 1,
+    borderColor: '#000000',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  },
+  backButton: {
+    marginLeft: 10, 
   },
   buttonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+    color: '#000000',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
+  input: {
+    width: '90%',
+    padding: 10,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    backgroundColor: '#fff',
+  },
+  text: {
+    color: '#000',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 100,
+}
 });
+
