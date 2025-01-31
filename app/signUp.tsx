@@ -46,8 +46,8 @@ const SignUp: React.FC<SignUpProps> = () => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('userProfile')}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('successSignUp')}>
+        <Text style={styles.buttonText}>Create account</Text>
       </TouchableOpacity>
       <TouchableOpacity style={[styles.button, styles.backButton]} onPress={() => navigation.navigate('home')}>
         <Text style={styles.buttonText}>Back to Home</Text>
