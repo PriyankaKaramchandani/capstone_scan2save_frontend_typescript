@@ -82,13 +82,26 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     footerContainer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
+        width: '100%',
+        alignItems: 'center',
+        backgroundColor: '#EF476F',
+        marginTop: 'auto',
     },
     footer: {
         width: '100%',
+        height: 88,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 5,
+      },
+      
+    }),
     },
 });
 

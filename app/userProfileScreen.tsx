@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Image, ScrollView, Platform, KeyboardAvoidingView, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
-import axios from 'axios';
+import { getUserProfile } from '../services/api';
 
-type UserProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'userProfile'>;
+type UserProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'userProfileScreen'>;
+type UserProfileScreenRouteProp = RouteProp<RootStackParamList, 'userProfileScreen'>;
+
 
 interface UserProfileProps {
     navigation: UserProfileScreenNavigationProp;
@@ -13,123 +16,125 @@ interface UserProfileProps {
 
 const UserProfileScreen: React.FC = () => {
   const navigation = useNavigation<UserProfileScreenNavigationProp>();
+  const route = useRoute<UserProfileScreenRouteProp>();
+
+  const { userId } = route.params || {};
+  console.log('Route params:', route.params);
 
   const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState<any>(null);
 
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        // Replace with your actual API endpoint
-        const response = await axios.get('https://api.example.com/user-profile');
-        setUserProfile(response.data);
+        const response = await getUserProfile(userId);
+        
+        const { user_data, medical_profiles } = response;
+
+        setUserProfile({
+          user_data,
+          medical_profile: medical_profiles[0] || {}, 
+        link: {
+          color: '#1E90FF',
+          textDecorationLine: 'underline',
+        },
+        });
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching user profile:", error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchUserProfile();
-  }, []);
-
+  }, [userId]);
+  
   if (loading) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.loadingText}>Loading...</Text>
-      </View>
-    );
+    return <ActivityIndicator />;
   }
 
-  if (!userProfile) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>Failed to load user profile.</Text>
-      </View>
-    );
+  if (userProfile === null) {
+    return <Text>Error fetching user profile</Text>;
   }
 
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>User Profile</Text>
-      <Text style={styles.label}>First Name</Text>
-      <Text style={styles.value}>{userProfile.firstName}</Text>
-      <Text style={styles.label}>Last Name</Text>
-      <Text style={styles.value}>{userProfile.lastName}</Text>
-      <Text style={styles.label}>Email</Text>
-      <Text style={styles.value}>{userProfile.email}</Text>
-      <Text style={styles.label}>Phone Number</Text>
-      <Text style={styles.value}>{userProfile.phoneNumber}</Text>
-      <Text style={styles.label}>Blood Group</Text>
-      <Text style={styles.value}>{userProfile.bloodGroup}</Text>
-      <Text style={styles.label}>Allergies</Text>
-      <Text style={styles.value}>{userProfile.allergies}</Text>
-      <Text style={styles.label}>Do Not Resuscitate</Text>
-      <Text style={styles.value}>{userProfile.doNotResuscitate ? 'Yes' : 'No'}</Text>
-      <Text style={styles.label}>Organ Donor Status</Text>
-      <Text style={styles.value}>{userProfile.organDonorStatus}</Text>
-      <Text style={styles.label}>Pregnant</Text>
-      <Text style={styles.value}>{userProfile.pregnant ? 'Yes' : 'No'}</Text>
-      <Text style={styles.label}>Past Surgeries</Text>
-      <Text style={styles.value}>{userProfile.pastSurgeries}</Text>
-      <Text style={styles.label}>Medications</Text>
-      <Text style={styles.value}>{userProfile.medications}</Text>
-      <Text style={styles.label}>Preferred Hospital</Text>
-      <Text style={styles.value}>{userProfile.preferredHospital}</Text>
-      <Text style={styles.label}>Special Instructions</Text>
-      <Text style={styles.value}>{userProfile.specialInstructions}</Text>
-      <TouchableOpacity style={styles.button} onPress={() => console.log('Edit Profile')}>
-        <Text style={styles.buttonText}>Edit Profile</Text>
-      </TouchableOpacity>
-    </ScrollView>
-  );
-};
+  // const openURL = (url: string) => {
+  //   if (url) {
+  //     Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err));
+  //   }
+  // };
+    return (
+      <>
+      <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 0 }}>
+        <View style={styles.formContainer}>
+        <Text style={styles.header}>Your Profile</Text>
+          <Text style={styles.label}>First Name: {userProfile.user_data?.first_name}</Text>
+          <Text style={styles.label}>Last Name: {userProfile.user_data?.last_name}</Text>
+          <Text style={styles.label}>Date of Birth: {userProfile.user_data?.date_of_birth}</Text>
+          <Text style={styles.label}>Gender: {userProfile.user_data?.gender}</Text>
+          <Text style={styles.label}>Phone Number: {userProfile.user_data?.phoneNumber}</Text>
+          <Text style={styles.label}>Role: {userProfile.user_data?.role}</Text>
+          <Text style={styles.label}>Blood Group: {userProfile.medical_profile?.blood_group}</Text>
+          <Text style={styles.label}>Allergies: {userProfile.medical_profile?.allergies.length > 0 ? userProfile.medical_profile.allergies.join(', ') : 'None'}</Text>
+          <Text style={styles.label}>Do Not Resuscitate: {userProfile.medical_profile?.preferences?.do_not_resuscitate ? 'Yes' : 'No'}</Text>
+          <Text style={styles.label}>Organ Donor Status: {userProfile.medical_profile?.preferences?.organ_donor_status ? 'Yes' : 'No'}</Text>
+          <Text style={styles.label}>Pregnant: {userProfile.medical_profile?.pregnant}</Text>
+          <Text style={styles.label}>Past Surgeries: {userProfile.medical_profile?.past_surgeries.length > 0 ? userProfile.medical_profile.past_surgeries.join(', ') : 'None'}</Text>
+          <Text style={styles.label}>Medications: {userProfile.medical_profile?.medications.length > 0 ? userProfile.medical_profile.medications.join(', ') : 'None'}</Text>
+          <Text style={styles.label}>Preferred Hospital: {userProfile.medical_profile?.preferred_hospital}</Text>
+          <Text style={styles.label}>Special Instructions: {userProfile.medical_profile?.special_instructions}</Text>
+          <Text style={styles.label}>QR Code Type: {userProfile.medical_profile?.qr_code_type}</Text>
+          {/* <TouchableOpacity onPress={() => openURL(userProfile.medical_profile?.QRCode.qr_code_url)}>
+            <Text style={styles.label}>Open QR Code:</Text>
+            <Text style={[styles.label, styles.link]}>{userProfile.medical_profile?.QRCode.qr_code_url}</Text>
+          </TouchableOpacity> */}
+          <Text style={styles.label}>QR Code:</Text>
+          <Image source={{ uri: `data:image/png;base64,${userProfile.user_data?.qr_code_base64}` }} style={styles.qrCode} />
+        </View>
+      </ScrollView>
+      </>
+      );
+    };
 
-export default UserProfileScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    padding: 20,
-    backgroundColor: '#EF476F',
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-    color: '#FFF',
-  },
-  label: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
-    color: '#FFF',
-  },
-  value: {
-    fontSize: 16,
-    marginBottom: 15,
-    color: '#FFF',
-  },
-  loadingText: {
-    fontSize: 18,
-    color: '#FFF',
-  },
-  errorText: {
-    fontSize: 18,
-    color: '#FFF',
-  },
-  button: {
-    marginTop: 20,
-    backgroundColor: '#FFF8EF',
-    padding: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#000',
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#000',
-    fontWeight: 'bold',
-  },
-});
+    const styles = StyleSheet.create({
+      formContainer: {
+      backgroundColor: '#EF476F',
+      padding: 20,
+      borderRadius: 8,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+      },
+      scrollContainer: {
+        padding: 16,
+        flexGrow: 1,
+      },
+      header: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 20,
+      textAlign: 'center',
+      color: '#000000',
+    },
+    label: {
+      fontSize: 18,
+      fontWeight: 'semibold',
+      marginBottom: 5,
+      color: '#000000',
+    },
+      qrCode: {
+        width: 250,
+        height: 250,
+        marginBottom: 20,
+        alignSelf: 'center',
+      },
+      link: {
+        color: 'navy',
+        textDecorationLine: 'underline',
+      }
+    });
+
+    export default UserProfileScreen;

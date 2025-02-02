@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
       android: {
         elevation: 5,
       },
+      
     }),
   },
   buttonsContainer: {
@@ -97,7 +98,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     paddingHorizontal: 20,
-    marginBottom: 20,
   },
   button: {
     backgroundColor: '#FFF8EF',

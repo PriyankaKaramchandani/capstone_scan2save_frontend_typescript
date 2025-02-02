@@ -1,18 +1,63 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, Platform, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, Platform, Image, Alert, BackHandler } from 'react-native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
-// import axios from 'axios';
+// import RNPrint from 'react-native-print';
+// import RNFS from 'react-native-fs';
+
 
 type QRCodeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'generateQrCode'>;
+type QRCodeScreenRouteProp = RouteProp<RootStackParamList, 'generateQrCode'>;
 
 const QRCodeScreen: React.FC = () => {
   const navigation = useNavigation<QRCodeScreenNavigationProp>();
+  const route = useRoute<QRCodeScreenRouteProp>();
+  const { qrCodeData } = route.params || {};
+  
   const [loading, setLoading] = useState(true);
+
+  // const downloadQRCode = async () => {
+  //   //Logic to download the QR code
+  //   try {
+  //     const path = `${RNFS.DocumentDirectoryPath}/qr_code.png`;
+  //     await RNFS.writeFile(path, qrCodeData, 'base64');
+  //     Alert.alert('Download', `QR Code downloaded successfully to ${path}`);
+  //   } catch (error) {
+  //     console.error('Error downloading QR Code:', error);
+  //     Alert.alert('Error', 'Failed to download QR Code');
+  //   }
+  // };
+
+  // const printQRCode = async () => {
+  //   try {
+  //     await RNPrint.print({
+  //       html: `<img src="data:image/png;base64,${qrCodeData}" style="width: 100%; height: auto;" />`,
+  //     });
+  //     Alert.alert('Print', 'QR Code printed successfully');
+  //   } catch (error) {
+  //     console.error('Error printing QR Code:', error);
+  //     Alert.alert('Error', 'Failed to print QR Code');
+  //   }
+  // };
+
+  const closeApplication = () => {
+    Alert.alert(
+      "Exit App",
+      "Are you sure you want to exit?",
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Yes", onPress: () => BackHandler.exitApp() }
+      ]
+    );
+  };
 
   useEffect(() => {
     // API call to generate QR code
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   }, []);
 
   return (
@@ -24,17 +69,29 @@ const QRCodeScreen: React.FC = () => {
         </>
       ) : (
         <>
-            <Text style={styles.loadingText}>QR Code generated successfully!</Text>
-            // You can add the QR code display logic here
-        
-          <View style={styles.buttonsContainer}></View>
-            <TouchableOpacity style={styles.button} onPress={downloadQRCode}>
+          <Text style={styles.loadingText}>QR Code generated successfully!</Text>
+          {qrCodeData ? (
+            <Image source={{ uri: `data:image/png;base64,${qrCodeData}` }} style={styles.qrCode} />
+          ) : (
+            <Text style={styles.loadingText}>No QR Code data available</Text>
+          )}
+
+          <View style={styles.buttonsContainer}>
+            {/* <TouchableOpacity style={styles.button} onPress={downloadQRCode}> */}
+            <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonText}>Download QR Code</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('home')}>
+            {/* <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('home')}>
               <Text style={styles.buttonText}>Back to Home</Text>
+            </TouchableOpacity> */}
+            {/* <TouchableOpacity style={styles.button} onPress={printQRCode}> */}
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Print QR Code</Text>
             </TouchableOpacity>
-          <View/>
+            <TouchableOpacity style={styles.button} onPress={closeApplication}>
+              <Text style={styles.buttonText}>Done</Text>
+            </TouchableOpacity>
+            </View>
           <View style={styles.footerContainer}>
             <Image source={require('../assets/images/footer.png')} style={styles.footer} resizeMode="contain" />
           </View>
@@ -60,6 +117,11 @@ const styles = StyleSheet.create({
   },
   activityIndicator: {
     marginTop: 20,
+  },
+  qrCode: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
   },
   buttonsContainer: {
       flexDirection: 'row',

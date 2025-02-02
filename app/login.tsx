@@ -47,7 +47,7 @@ const Login: React.FC<LoginProps> = () => {
         secureTextEntry
         autoCapitalize="none"
       />
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('userProfileScreen')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('userProfileScreen', { userId: 'f6be22bc-8f3e-467a-a8db-d51108af0dac'})}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
       <TouchableOpacity style={[styles.button, styles.backButton]} onPress={() => navigation.navigate('home')}>
