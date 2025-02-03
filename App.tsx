@@ -5,10 +5,11 @@ import Home from './app/home';
 import Login from './app/login'; 
 import SignUp from './app/signUp';
 import successSignUp from './app/successSignUp';
-import Form from './app/Form';
+import Form from './app/form';
 import { RootStackParamList } from './types';
 import generateQrCode from './app/generateQrCode';
-import UserProfileScreen from './app/UserProfileScreen';
+import UserProfileScreen from './app/userProfileScreen';
+import ScanQrCode from './app/scanQrCode';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -23,12 +24,15 @@ const App = () => {
         <Stack.Screen name="form" component={Form} options={{ title: 'Form' }} />
         <Stack.Screen name="generateQrCode" component={generateQrCode} options={{ title: 'generateQrCode' }} />
         <Stack.Screen name="userProfileScreen" component={UserProfileScreen} options={{ title: 'userProfileScreen' }} />
+        <Stack.Screen name="scanQrCode" component={ScanQrCode} options={{ title: 'scanQrCode' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 export default App;
+
+
 
 
 

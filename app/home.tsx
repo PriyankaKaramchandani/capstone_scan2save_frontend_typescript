@@ -4,7 +4,6 @@ import { View, Image, StyleSheet, TouchableOpacity, Text, Platform } from 'react
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import { useNavigation } from 'expo-router';
-// import Login from './Login';
 
 // Define the type for the navigation prop
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'home'>;
@@ -27,6 +26,9 @@ const Home: React.FC = () => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('signUp')}>
           <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('scanQrCode')}>
+          <Text style={styles.buttonText}>Scan a QR Code</Text>
         </TouchableOpacity>
       </View>
       <View>
@@ -53,12 +55,12 @@ const styles = StyleSheet.create({
       ...Platform.select({
         ios: {
           shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
+          shadowOffset: { width: 2, height: 2 },
           shadowOpacity: 0.8,
-          shadowRadius: 3,
+          shadowRadius: 5,
         },
         android: {
-          elevation: 5,
+          elevation: 10,
         },
       }),
     },
@@ -66,14 +68,18 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 40,
         right: 20,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: 150,
+        // flexDirection: 'row',
+        // justifyContent: 'space-between',
+        // width: 150,
+      // width: '100%',
+      alignItems: 'flex-end',
+      // marginBottom: 20,
     },
     button: {
       backgroundColor: '#FFF8EF',
       padding: 10,
       borderRadius: 5,
+      marginVertical: 5,
       marginHorizontal: 5,
       borderWidth: 1,
       borderColor: '#000000',
