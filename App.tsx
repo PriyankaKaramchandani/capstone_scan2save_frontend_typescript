@@ -10,6 +10,7 @@ import { RootStackParamList } from './types';
 import generateQrCode from './app/generateQrCode';
 import UserProfileScreen from './app/userProfileScreen';
 import ScanQrCode from './app/scanQrCode';
+import ScanningPage from './app/scanningPage';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -25,6 +26,7 @@ const App = () => {
         <Stack.Screen name="generateQrCode" component={generateQrCode} options={{ title: 'generateQrCode' }} />
         <Stack.Screen name="userProfileScreen" component={UserProfileScreen} options={{ title: 'userProfileScreen' }} />
         <Stack.Screen name="scanQrCode" component={ScanQrCode} options={{ title: 'scanQrCode' }} />
+        <Stack.Screen name="scanningPage" component={ScanningPage} options={{ title: 'scanningPage' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -6,6 +6,7 @@ export type RootStackParamList = {
     generateQrCode: { qrCodeData: string };
     login: undefined;
     userProfileScreen: { userId: string };
-    scanQrCode: undefined
+    scanQrCode: undefined;
+    scanningPage: undefined;
   };
 

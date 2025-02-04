@@ -28,7 +28,7 @@ const ScanQRCode: React.FC<ScanQRCodeProps> = () => {
                 </Pressable>
                 {/* <Link href={"/scanner"} asChild>
                     <Pressable disabled={isPermissionGranted} style={styles.button}> */}
-                    <Pressable onPress={() => navigation.navigate('scanQrCode')} style={styles.button} disabled={!isPermissionGranted}>
+                    <Pressable onPress={() => navigation.navigate('scanningPage')} style={styles.button} disabled={!isPermissionGranted}>
                         <Text style={[styles.buttonText,
                             {opacity: !isPermissionGranted ? 0.5 : 1},
                         ]}>
@@ -36,6 +36,7 @@ const ScanQRCode: React.FC<ScanQRCodeProps> = () => {
                         </Text>
                     </Pressable>
                 {/* </Link> */}
+
             </View>
         </SafeAreaView>
         );
