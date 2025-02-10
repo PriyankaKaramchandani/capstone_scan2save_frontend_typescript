@@ -12,6 +12,7 @@ import UserProfileScreen from './app/userProfileScreen';
 import ScanQrCode from './app/scanQrCode';
 import ScanningPage from './app/scanningPage';
 
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {

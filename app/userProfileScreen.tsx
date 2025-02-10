@@ -34,10 +34,11 @@ const UserProfileScreen: React.FC = () => {
 
         setUserProfile({
           user_data,
-          medical_profile: medical_profiles[0] || {}, 
-        link: {
-          color: '#1E90FF',
-          textDecorationLine: 'underline',
+        medical_profile: {
+          ...medical_profiles[0],
+          allergies: medical_profiles[0]?.allergies || [], // Ensure allergies is an array
+          past_surgeries: medical_profiles[0]?.past_surgeries || [], // Ensure past_surgeries is an array
+          medications: medical_profiles[0]?.medications || [], // Ensure medications is an array
         },
         });
       } catch (error) {
@@ -58,11 +59,6 @@ const UserProfileScreen: React.FC = () => {
     return <Text>Error fetching user profile</Text>;
   }
 
-  // const openURL = (url: string) => {
-  //   if (url) {
-  //     Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err));
-  //   }
-  // };
     return (
       <>
       <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 0 }}>
@@ -84,10 +80,6 @@ const UserProfileScreen: React.FC = () => {
           <Text style={styles.label}>Preferred Hospital: {userProfile.medical_profile?.preferred_hospital}</Text>
           <Text style={styles.label}>Special Instructions: {userProfile.medical_profile?.special_instructions}</Text>
           <Text style={styles.label}>QR Code Type: {userProfile.medical_profile?.qr_code_type}</Text>
-          {/* <TouchableOpacity onPress={() => openURL(userProfile.medical_profile?.QRCode.qr_code_url)}>
-            <Text style={styles.label}>Open QR Code:</Text>
-            <Text style={[styles.label, styles.link]}>{userProfile.medical_profile?.QRCode.qr_code_url}</Text>
-          </TouchableOpacity> */}
           <Text style={styles.label}>QR Code:</Text>
           <Image source={{ uri: `data:image/png;base64,${userProfile.user_data?.qr_code_base64}` }} style={styles.qrCode} />
         </View>

@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-// Use the local IP address of your machine and the correct port
-const API_BASE_URL = 'http://192.168.5.159:5000/api';
-// const API_BASE_URL = 'http://127.0.0.1:5000/api';
+// const API_BASE_URL = 'http://192.168.5.159:5000/api';
+const API_BASE_URL = 'https://capstone-scan2save-backend.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -24,7 +23,7 @@ export const createNewUserProfile = async (profileData: any) => {
   }
 };
 
-// Add function to get user profile
+
 export const getUserProfile = async (userId: string) => {
     try {
       console.log(`Fetching user profile for user ID: ${userId}`);

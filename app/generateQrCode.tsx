@@ -88,8 +88,8 @@ const QRCodeScreen: React.FC = () => {
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Print QR Code</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={closeApplication}>
-              <Text style={styles.buttonText}>Done</Text>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('home')}>
+              <Text style={styles.buttonText}>Back Home</Text>
             </TouchableOpacity>
             </View>
           <View style={styles.footerContainer}>

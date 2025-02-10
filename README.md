@@ -2,20 +2,39 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+# Capstone Project: Scan2Save
+
+This project is a mobile application designed for emergency purposes. Users can create a user and medical profile, and a QR code will be generated. This QR code can be downloaded and saved for emergency situations.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [API Endpoints](#api-endpoints)
+- [Components](#components)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Get started
+## Installation
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/yourusername/scan2save.git
+    cd scan2save
+    ```
 
-1. Install dependencies
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-   ```bash
-   npm install
-   ```
+3. Start the development server:
+    ```bash
+    npm start
+    ```
 
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
+## Usage
 In the output, you'll find options to open the app in a
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
@@ -25,24 +44,40 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+## Components
 
-When you're ready, run:
+### HomeScreen
+The `HomeScreen` component is the main entry point of the application.
 
-```bash
-npm run reset-project
-```
+### SignUp
+The `SignUp` component allows users to sign up for a new account.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### UserProfileScreen
+The `UserProfileScreen` component displays the user's profile information.
 
-## Learn more
+### successSignUp
+The `successSignUp` component displays a success message and details on app after a user has successfully signed up.
+
+
+## Contributing
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add some feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Open a pull request.
+
+
+## Expo: Learn more
 
 To learn more about developing your project with Expo, look at the following resources:
 
 - [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
 - [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-## Join the community
+
+## Join the Expo community
 
 Join our community of developers creating universal apps.
 

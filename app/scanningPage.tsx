@@ -19,7 +19,7 @@ const ScanningPage: React.FC = () => {
 
     useEffect(() => {
         const fetchUserProfile = async () => {
-            if (!userId) return; // Avoid running when userId is null
+            if (!userId) return; 
             
             setLoading(true);
             try {
@@ -121,87 +121,3 @@ export default ScanningPage;
 
 
 
-// import { CameraView } from 'expo-camera';
-// import { View, Text, StyleSheet, Platform, StatusBar, SafeAreaView, ActivityIndicator } from 'react-native';
-// import Overlay from "./Overlay";
-// import React, { useEffect, useState } from 'react';
-// import { useNavigation } from '@react-navigation/native';
-// import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-// import { useRoute, RouteProp } from '@react-navigation/native';
-// import { RootStackParamList } from '../types';
-// import { getUserProfile } from '../services/api';
-
-// type ScanningPageScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'scanningPage'>;
-
-// interface ScanningPageProps {
-//     navigation: ScanningPageScreenNavigationProp;
-// }
-// const scanningPage = () => {
-//     const navigation = useNavigation<ScanningPageScreenNavigationProp>();
-//     // const route = useRoute<RouteProp<RootStackParamList, 'scanningPage'>>();
-    
-//     //   const { userId } = route.params || {};
-//     //   console.log('Route params:', route.params);
-
-//     const [data, setData] = useState<string>(''); 
-//     const [loading, setLoading] = useState(true);
-//     const [userProfile, setUserProfile] = useState<any>(null);
-   
-
-// useEffect(() => {
-//   const fetchUserProfile = async () => {
-//     try {
-//       const response = await getUserProfile(data); // Pass the full URL directly
-//       const { user_data, medical_profiles } = response;
-
-//       setUserProfile({
-//         user_data,
-//         medical_profile: medical_profiles[0] || {},
-//         link: {
-//           color: '#1E90FF',
-//           textDecorationLine: 'underline',
-//         },
-//       });
-//     } catch (error) {
-//       console.error("Error fetching user profile:", error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-//   fetchUserProfile();
-// }, [data]); 
-
-// if (loading) {
-//   return <ActivityIndicator />;
-// }
-
-// if (userProfile === null) {
-//   return <Text>Error fetching user profile</Text>;
-// }
-
-    
-//     const handleQrCodeScanned = ({ data }: {data: string}) => {
-//         console.log("data", data);
-//         const userId = data.split('/').pop();
-//         console.log("Extracted userId", userId);
-//         if (userId) {
-//             navigation.navigate('userProfileScreen', { userId });
-//         } else {
-//             console.error('Invalid userId:', userId);
-//         }
-//     };
-
-//     return (
-//         <SafeAreaView style={StyleSheet.absoluteFillObject}>
-//         {Platform.OS === "android" ? <StatusBar hidden /> : null}
-//         <CameraView 
-//         style={StyleSheet.absoluteFillObject} 
-//         facing="back"
-//         onBarcodeScanned={handleQrCodeScanned}
-//         />
-//         <Overlay />
-//         </SafeAreaView>
-//     );
-// };
-
-// export default scanningPage;

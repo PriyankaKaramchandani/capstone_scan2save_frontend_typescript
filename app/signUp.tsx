@@ -22,9 +22,6 @@ const SignUp: React.FC<SignUpProps> = () => {
       alert("Please fill out both fields.");
       return;
     }
-    // Call authentication API or validation here
-    // If successful, navigate to another screen
-    // navigation.navigate('CreateProfile'); // Ensure 'CreateProfile' exists in RouteStackParamList
   };
 
   return (

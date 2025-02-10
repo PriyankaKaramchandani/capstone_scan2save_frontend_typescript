@@ -22,9 +22,6 @@ const Login: React.FC<LoginProps> = () => {
       alert("Please fill out both fields.");
       return;
     }
-    // Call authentication API or validation here
-    // If successful, navigate to another screen
-    // navigation.navigate('CreateProfile'); // Ensure 'CreateProfile' exists in RouteStackParamList
   };
 
   return (
@@ -47,7 +44,7 @@ const Login: React.FC<LoginProps> = () => {
         secureTextEntry
         autoCapitalize="none"
       />
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('userProfileScreen', { userId: 'f6be22bc-8f3e-467a-a8db-d51108af0dac'})}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('userProfileScreen', { userId: '1e555a59-5b96-46a2-a7af-f867cf5d2259' })}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
       <TouchableOpacity style={[styles.button, styles.backButton]} onPress={() => navigation.navigate('home')}>
