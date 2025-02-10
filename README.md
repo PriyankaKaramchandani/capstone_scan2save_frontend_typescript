@@ -44,10 +44,19 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
+
+## API Endpoints
+
+### Base URL
+https://capstone-scan2save-backend.onrender.com/api
+
 ## Components
 
 ### HomeScreen
 The `HomeScreen` component is the main entry point of the application.
+
+### Login
+The [Login](http://_vscodecontentref_/6) component allows users to log in to their account.
 
 ### SignUp
 The `SignUp` component allows users to sign up for a new account.
@@ -57,6 +66,19 @@ The `UserProfileScreen` component displays the user's profile information.
 
 ### successSignUp
 The `successSignUp` component displays a success message and details on app after a user has successfully signed up.
+
+### Form
+The [Form](http://_vscodecontentref_/10) component allows users to create their user and medical profile.
+
+### GenerateQrCode
+The `GenerateQrCode` component generates a QR code based on the user's profile information.
+
+### ScanQrCode
+The [ScanQrCode](http://_vscodecontentref_/11) component allows users to scan a QR code.
+
+### ScanningPage
+The [ScanningPage](http://_vscodecontentref_/12) component displays the result of scanning a QR code.
+
 
 
 ## Contributing
